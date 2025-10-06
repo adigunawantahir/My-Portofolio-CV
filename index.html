@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interface Curriculum Vitae - Adi Gunawan Tahir R.A</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            animation-name: colorChange;
+            animation-duration: 10s;
+            animation-fill-mode: forwards;
+        }
+        @keyframes colorChange {
+            from { background-color: #e0f2fe; }
+            to { background-color: #D7CCC8; }
+        }
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        h1, h2, h3, .font-serif {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+        h2 {
+            color: #6D4C41;
+            text-shadow: 3px 3px 0px #D1C4B7, 5px 5px 10px rgba(0,0,0,0.2);
+        }
+        .content-card {
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            background-color: rgba(251, 251, 248, 0.9);
+            border: 10px solid #D1C4B7;
+            position: relative;
+            overflow: hidden;
+        }
+        .section-divider {
+            border-bottom: 1px solid #EAE2D9;
+        }
+        .contact-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
+            stroke-width: 2;
+        }
+        .accordion-header {
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            background-color: rgba(248, 245, 242, 0.8);
+        }
+        .accordion-header:hover {
+            background-color: rgba(241, 240, 237, 0.8);
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+            background-color: transparent;
+        }
+        .accordion-icon {
+            transition: transform 0.4s ease;
+        }
+        .accordion-header.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+        .lang-btn {
+            transition: all 0.3s ease;
+            opacity: 0.5;
+            border: 3px solid transparent;
+        }
+        .lang-btn:hover {
+            opacity: 1;
+        }
+        .lang-btn.active {
+            opacity: 1;
+            border-color: #A68D6A;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .typing-cursor {
+            display: inline-block;
+            width: 2px;
+            background-color: #333;
+            margin-left: 4px;
+            animation: blink 0.7s infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <canvas id="bg-canvas"></canvas>
+
+    <div class="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto rounded-xl content-card">
+            
+            <button id="sound-toggle" class="absolute top-4 right-4 z-20 p-2 rounded-full text-stone-500 hover:bg-stone-200 focus:outline-none" aria-label="Toggle Sound">
+                <!-- Sound icon will be inserted by JS -->
+            </button>
+            
+            <div class="content-layer">
+                <div class="relative p-4 flex justify-center items-center gap-4 border-b border-stone-200">
+                    <button id="btn-id" class="lang-btn active w-12 h-12 rounded-full overflow-hidden focus:outline-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2 1" class="w-full h-full"><rect width="2" height="1" fill="#fff"/><rect width="2" height="0.5" fill="#ce1126"/></svg>
+                    </button>
+                    <div class="text-red-500 opacity-70">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" /></svg>
+                    </div>
+                    <button id="btn-en" class="lang-btn w-12 h-12 rounded-full overflow-hidden focus:outline-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 30" class="w-full h-full"><clipPath id="a"><path d="M0 0v30h60V0z"/></clipPath><path d="M0 0v30h60V0z" fill="#012169"/><path d="m0 0 60 30m0-30L0 30" stroke="#fff" stroke-width="6" clip-path="url(#a)"/><path d="m0 0 60 30m0-30L0 30" stroke="#C8102E" stroke-width="4" clip-path="url(#a)"/><path d="M30 0v30M0 15h60" stroke="#fff" stroke-width="10"/><path d="M30 0v30M0 15h60" stroke="#C8102E" stroke-width="6"/></svg>
+                    </button>
+                </div>
+
+                <div id="cv-content">
+                    <div id="cv-id">
+                        <header class="p-8 md:p-12 text-center">
+                            <h1 class="text-4xl md:text-5xl text-stone-800 tracking-wider">ADI GUNAWAN TAHIR R.A</h1>
+                            <p class="mt-3 text-lg md:text-xl text-stone-600">Internal Audit & Compliance Leader | Automotive, <span class="whitespace-nowrap">Transportation & Manufacturing</span></p>
+                            <div class="mt-6 flex justify-center">
+                                <div class="flex flex-col items-center gap-y-2 text-blue-700 italic text-sm">
+                                    <a href="mailto:adigunawantahir@gmail.com" class="flex items-center hover:text-blue-900"><svg class="contact-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" /></svg><span>adigunawantahir@gmail.com</span></a>
+                                    <div class="flex items-center"><svg class="contact-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.211-.998-.552-1.348l-2.454-2.454a2.25 2.25 0 00-3.182 0l-1.362 1.362a.75.75 0 01-1.06 0l-4.243-4.243a.75.75 0 010-1.06l1.362-1.362a2.25 2.25 0 000-3.182L6.848 4.602a2.25 2.25 0 00-1.348-.552H4.125A2.25 2.25 0 001.875 6.75H2.25z" /></svg><span>08114441453</span></div>
+                                    <a href="https://bit.ly/3X3bkiD" target="_blank" class="flex items-center hover:text-blue-900"><svg class="contact-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zm0 0c0 1.657 1.007 3 2.25 3S21 13.657 21 12a9 9 0 10-2.636 6.364M16.5 12V8.25" /></svg><span>LinkedIn Profile</span></a>
+                                </div>
+                            </div>
+                        </header>
+                        <main class="p-8 md:p-12">
+                            <section class="mb-10 section-divider pt-6 pb-10">
+                                <h2 class="text-3xl mb-4">Profil</h2>
+                                <p id="profile-text-id" class="text-base leading-relaxed text-stone-600 text-justify"></p>
+                            </section>
+                            <section class="mb-10 section-divider pb-10">
+                                <h2 class="text-3xl mb-6">Keahlian Utama</h2>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+                                    <div class="bg-stone-100/50 p-4 rounded-lg"><h3 class="font-semibold text-lg text-stone-800">Audit & Compliance</h3><p class="text-stone-600 mt-1">Internal Audit, Investigasi Fraud, SOP Review, Risk Assessment.</p></div>
+                                    <div class="bg-stone-100/50 p-4 rounded-lg"><h3 class="font-semibold text-lg text-stone-800">Leadership & Management</h3><p class="text-stone-600 mt-1">Team Leadership, Cross-functional Coordination, Training & Mentoring.</p></div>
+                                    <div class="bg-stone-100/50 p-4 rounded-lg"><h3 class="font-semibold text-lg text-stone-800">Operational Excellence</h3><p class="text-stone-600 mt-1">Cost Control, Reporting, KPI Design, Regulatory Compliance.</p></div>
+                                </div>
+                            </section>
+                            <section class="mb-10 section-divider pb-10">
+                                <h2 class="text-3xl mb-6">Pengalaman Kerja</h2>
+                                <div class="space-y-4">
+                                    <div class="border rounded-lg overflow-hidden"><div class="accordion-header p-4 flex justify-between items-center"><h3 class="text-xl font-semibold text-stone-800">Group Head Internal Audit Automotive Group</h3><div class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" /></svg><svg class="accordion-icon w-6 h-6 text-stone-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></div></div><div class="accordion-content border-t border-stone-200"><div class="p-4"><p class="text-sm text-stone-500 mb-3">PT Bosowa Corporindo | Okt 2022 - Mei 2024</p><ul class="list-disc list-outside ml-5 space-y-1 text-stone-600"><li>Memimpin audit rutin & investigasi pada dealer Mitsubishi, Mercedes Benz, Hyundai, perusahaan karoseri, dan startup.</li><li>Merancang sistem rating audit sebagai KPI perusahaan & memonitor tindak lanjut, menurunkan temuan berulang hingga 30%.</li><li>Menyampaikan laporan audit langsung kepada CEO & BOD Holding Group.</li></ul></div></div></div>
+                                    <div class="border rounded-lg overflow-hidden"><div class="accordion-header p-4 flex justify-between items-center"><h3 class="text-xl font-semibold text-stone-800">Group Head Internal Audit & Compliance</h3><div class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" /></svg><svg class="accordion-icon w-6 h-6 text-stone-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></div></div><div class="accordion-content border-t border-stone-200"><div class="p-4"><p class="text-sm text-stone-500 mb-3">PT Bosowa Berlian Motor | Mei 2013 - Okt 2022</p><ul class="list-disc list-outside ml-5 space-y-1 text-stone-600"><li>Memimpin tim 4 auditor dalam melaksanakan audit & compliance pada 33 cabang dealer Mitsubishi Motors di Indonesia timur.</li><li>Mengawasi kepatuhan SOP, mendokumentasikan kebijakan, serta memfasilitasi training pencegahan fraud.</li><li>Meningkatkan kepatuhan cabang terhadap SOP hingga 95%.</li></ul></div></div></div>
+                                    <div class="border rounded-lg overflow-hidden"><div class="accordion-header p-4 flex justify-between items-center"><h3 class="text-xl font-semibold text-stone-800">Cost Control Supervisor & COGS</h3><div class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" /></svg><svg class="accordion-icon w-6 h-6 text-stone-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></div></div><div class="accordion-content border-t border-stone-200"><div class="p-4"><p class="text-sm text-stone-500 mb-3">PT Rekreasindo Nusantara (Trans Studio) | Sep 2009 - Mei 2013</p><ul class="list-disc list-outside ml-5 space-y-1 text-stone-600"><li>Mengontrol biaya produksi F&B, mengawasi inventaris, kasir, dan 6 outlet.</li><li>Menyusun jadwal stok opname bulanan & melakukan rekonsiliasi keuangan harian.</li></ul></div></div></div>
+                                    <div class="border rounded-lg overflow-hidden"><div class="accordion-header p-4 flex justify-between items-center"><h3 class="text-xl font-semibold text-stone-800">Arco (Agency Reguler Cordinator)</h3><div class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" /></svg><svg class="accordion-icon w-6 h-6 text-stone-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></div></div><div class="accordion-content border-t border-stone-200"><div class="p-4"><p class="text-sm text-stone-500 mb-3">PT. Bank Danamon Indonesia, Tbk | Mar 2008 - Sep 2009</p><ul class="list-disc list-outside ml-5 space-y-1 text-stone-600"><li>Mengelola agency pihak ketiga untuk recovery asset.</li><li>Mendistribusikan account handle & memantau progress pengembalian aset.</li></ul></div></div></div>
+                                </div>
+                            </section>
+                            <section id="education-id">
+                                <h2 class="text-3xl mb-4">Pendidikan</h2>
+                                <h3 class="text-xl font-semibold text-stone-800">Universitas Hasanuddin</h3>
+                                <p class="text-stone-600">Sarjana Teknologi Pertanian</p>
+                            </section>
+                        </main>
+                    </div>
+
+                    <div id="cv-en" class="hidden">
+                        <header class="p-8 md:p-12 text-center">
+                            <h1 class="text-4xl md:text-5xl text-stone-800 tracking-wider">ADI GUNAWAN TAHIR R.A</h1>
+                            <p class="mt-3 text-lg md:text-xl text-stone-600">Internal Audit & Compliance Leader | Automotive, <span class="whitespace-nowrap">Transportation & Manufacturing</span></p>
+                             <div class="mt-6 flex justify-center">
+                                <div class="flex flex-col items-center gap-y-2 text-blue-700 italic text-sm">
+                                    <a href="mailto:adigunawantahir@gmail.com" class="flex items-center hover:text-blue-900"><svg class="contact-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" /></svg><span>adigunawantahir@gmail.com</span></a>
+                                    <div class="flex items-center"><svg class="contact-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.211-.998-.552-1.348l-2.454-2.454a2.25 2.25 0 00-3.182 0l-1.362 1.362a.75.75 0 01-1.06 0l-4.243-4.243a.75.75 0 010-1.06l1.362-1.362a2.25 2.25 0 000-3.182L6.848 4.602a2.25 2.25 0 00-1.348-.552H4.125A2.25 2.25 0 001.875 6.75H2.25z" /></svg><span>08114441453</span></div>
+                                    <a href="https://bit.ly/3X3bkiD" target="_blank" class="flex items-center hover:text-blue-900"><svg class="contact-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zm0 0c0 1.657 1.007 3 2.25 3S21 13.657 21 12a9 9 0 10-2.636 6.364M16.5 12V8.25" /></svg><span>LinkedIn Profile</span></a>
+                                </div>
+                            </div>
+                        </header>
+                        <main class="p-8 md:p-12">
+                            <section class="mb-10 section-divider pt-6 pb-10">
+                                <h2 class="text-3xl mb-4">Profile</h2>
+                                <p id="profile-text-en" class="text-base leading-relaxed text-stone-600 text-justify"></p>
+                            </section>
+                            <section class="mb-10 section-divider pb-10">
+                                <h2 class="text-3xl mb-6">Core Skills</h2>
+                                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+                                    <div class="bg-stone-100/50 p-4 rounded-lg"><h3 class="font-semibold text-lg text-stone-800">Audit & Compliance</h3><p class="text-stone-600 mt-1">Internal Audit, Fraud Investigation, SOP Review, Risk Assessment.</p></div>
+                                    <div class="bg-stone-100/50 p-4 rounded-lg"><h3 class="font-semibold text-lg text-stone-800">Leadership & Management</h3><p class="text-stone-600 mt-1">Team Leadership, Cross-functional Coordination, Training & Mentoring.</p></div>
+                                    <div class="bg-stone-100/50 p-4 rounded-lg"><h3 class="font-semibold text-lg text-stone-800">Operational Excellence</h3><p class="text-stone-600 mt-1">Cost Control, Reporting, KPI Design, Regulatory Compliance.</p></div>
+                                </div>
+                            </section>
+                            <section class="mb-10 section-divider pb-10">
+                                <h2 class="text-3xl mb-6">Work Experience</h2>
+                                <div class="space-y-4">
+                                    <div class="border rounded-lg overflow-hidden"><div class="accordion-header p-4 flex justify-between items-center"><h3 class="text-xl font-semibold text-stone-800">Group Head Internal Audit Automotive Group</h3><div class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" /></svg><svg class="accordion-icon w-6 h-6 text-stone-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></div></div><div class="accordion-content border-t border-stone-200"><div class="p-4"><p class="text-sm text-stone-500 mb-3">PT Bosowa Corporindo | Oct 2022 - May 2024</p><ul class="list-disc list-outside ml-5 space-y-1 text-stone-600"><li>Led routine and investigative audits for Mitsubishi, Mercedes Benz, and Hyundai dealers, a body manufacturing company, and a startup.</li><li>Designed an audit rating system as a KPI for subsidiaries and monitored follow-ups, reducing recurring findings by 30%.</li><li>Reported audit results directly to the CEO and BOD of the Holding Group.</li></ul></div></div></div>
+                                    <div class="border rounded-lg overflow-hidden"><div class="accordion-header p-4 flex justify-between items-center"><h3 class="text-xl font-semibold text-stone-800">Group Head Internal Audit & Compliance</h3><div class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" /></svg><svg class="accordion-icon w-6 h-6 text-stone-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></div></div><div class="accordion-content border-t border-stone-200"><div class="p-4"><p class="text-sm text-stone-500 mb-3">PT Bosowa Berlian Motor | May 2013 - Oct 2022</p><ul class="list-disc list-outside ml-5 space-y-1 text-stone-600"><li>Led a team of 4 auditors to conduct audit & compliance processes across 33 Mitsubishi Motors dealer branches in Eastern Indonesia.</li><li>Oversaw compliance tasks including SOP review, policy documentation, and facilitated fraud prevention training.</li><li>Improved branch compliance with SOPs by up to 95%.</li></ul></div></div></div>
+                                    <div class="border rounded-lg overflow-hidden"><div class="accordion-header p-4 flex justify-between items-center"><h3 class="text-xl font-semibold text-stone-800">Cost Control Supervisor & COGS</h3><div class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" /></svg><svg class="accordion-icon w-6 h-6 text-stone-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></div></div><div class="accordion-content border-t border-stone-200"><div class="p-4"><p class="text-sm text-stone-500 mb-3">PT Rekreasindo Nusantara (Trans Studio) | Sep 2009 - May 2013</p><ul class="list-disc list-outside ml-5 space-y-1 text-stone-600"><li>Controlled F&B production costs, supervised inventory, cashier operations, and 6 outlets.</li><li>Prepared monthly inventory count schedules and conducted daily revenue reconciliations.</li></ul></div></div></div>
+                                    <div class="border rounded-lg overflow-hidden"><div class="accordion-header p-4 flex justify-between items-center"><h3 class="text-xl font-semibold text-stone-800">Arco (Agency Reguler Cordinator)</h3><div class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" /></svg><svg class="accordion-icon w-6 h-6 text-stone-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></div></div><div class="accordion-content border-t border-stone-200"><div class="p-4"><p class="text-sm text-stone-500 mb-3">PT. Bank Danamon Indonesia, Tbk | Mar 2008 - Sep 2009</p><ul class="list-disc list-outside ml-5 space-y-1 text-stone-600"><li>Managed third-party agencies for asset recovery operations.</li><li>Distributed account handles and monitored recovery progress.</li></ul></div></div></div>
+                                </div>
+                            </section>
+                            <section id="education-en">
+                                <h2 class="text-3xl mb-4">Education</h2>
+                                <h3 class="text-xl font-semibold text-stone-800">Universitas Hasanuddin</h3>
+                                <p class="text-stone-600">Bachelor's degree, Agriculture Technology</p>
+                            </section>
+                        </main>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const btnId = document.getElementById('btn-id');
+        const btnEn = document.getElementById('btn-en');
+        const cvId = document.getElementById('cv-id');
+        const cvEn = document.getElementById('cv-en');
+        const profileTextId = document.getElementById('profile-text-id');
+        const profileTextEn = document.getElementById('profile-text-en');
+        
+        const originalTextId = "Berpengalaman selama 12 tahun lebih dalam Internal Audit, Compliance, dan Risk Management di sektor otomotif, transportasi, manufaktur karoseri, dan startup. Terbukti dalam memimpin tim Internal Audit untuk pemeriksaan lebih dari 30 cabang, membangun kerangka tata kelola yang kokoh, serta merancang sistem rating audit sebagai KPI perusahaan. Menggabungkan ketajaman analisis, kepemimpinan, dan integritas untuk mendukung pertumbuhan bisnis yang berkelanjutan.";
+        const originalTextEn = "Over 12+ years of experience in Internal Audit, Compliance, and Risk Management across the automotive, transportation, body manufacturing (karoseri), and startup sectors. Proven track record in leading audits across 30+ branches, building robust governance frameworks, and designing audit rating systems as part of company KPIs. Combines strong analytical skills, team leadership, and integrity to support sustainable business growth.";
+
+        let typeIntervals = {};
+
+        function typeWriter(element, text, speed = 20, elementId) {
+            if (typeIntervals[elementId]) {
+                clearInterval(typeIntervals[elementId]);
+            }
+            
+            let i = 0;
+            element.innerHTML = "";
+            const cursor = '<span class="typing-cursor"></span>';
+            element.innerHTML = cursor;
+
+            typeIntervals[elementId] = setInterval(() => {
+                if (i < text.length) {
+                    element.innerHTML = text.substring(0, i + 1) + cursor;
+                    i++;
+                } else {
+                    clearInterval(typeIntervals[elementId]);
+                    setTimeout(() => {
+                         element.innerHTML = text;
+                    }, 1000);
+                }
+            }, speed);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            typeWriter(profileTextId, originalTextId, 20, 'profile-id');
+        });
+
+        btnId.addEventListener('click', () => {
+            cvId.classList.remove('hidden');
+            cvEn.classList.add('hidden');
+            btnId.classList.add('active');
+            btnEn.classList.remove('active');
+            typeWriter(profileTextId, originalTextId, 20, 'profile-id');
+        });
+
+        btnEn.addEventListener('click', () => {
+            cvEn.classList.remove('hidden');
+            cvId.classList.add('hidden');
+            btnEn.classList.add('active');
+            btnId.classList.remove('active');
+            typeWriter(profileTextEn, originalTextEn, 20, 'profile-en');
+        });
+
+        const accordions = document.querySelectorAll('.accordion-header');
+        accordions.forEach((accordion, index) => {
+            accordion.addEventListener('click', () => {
+                const isActive = accordion.classList.contains('active');
+
+                accordions.forEach(otherAccordion => {
+                    if (otherAccordion !== accordion && otherAccordion.classList.contains('active')) {
+                        otherAccordion.classList.remove('active');
+                        otherAccordion.nextElementSibling.style.maxHeight = null;
+                    }
+                });
+                
+                if(!isActive) {
+                    accordion.classList.add('active');
+                    const content = accordion.nextElementSibling;
+                    const skillDesc = content.querySelector('.skill-description');
+                    
+                    content.style.maxHeight = content.scrollHeight + 'px';
+
+                    if (skillDesc) {
+                        const textToType = skillDesc.getAttribute('data-text');
+                        setTimeout(() => {
+                            if (accordion.classList.contains('active')) {
+                                typeWriter(skillDesc, textToType, 30, `skill-${index}`);
+                            }
+                        }, 400); // Wait for animation
+                    }
+                } else {
+                    accordion.classList.remove('active');
+                    const content = accordion.nextElementSibling;
+                    content.style.maxHeight = null;
+                }
+            });
+        });
+
+        // Sound Control
+        const soundToggle = document.getElementById('sound-toggle');
+        const soundOnIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /></svg>`;
+        const soundOffIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" clip-rule="evenodd" /><path stroke-linecap="round" stroke-linejoin="round" d="M17 14l-4-4m0 4l4-4" /></svg>`;
+
+        let audioReady = false;
+        soundToggle.innerHTML = soundOffIcon;
+        Tone.Destination.mute = true;
+
+        soundToggle.addEventListener('click', async () => {
+            if (!audioReady) {
+                await Tone.start();
+                
+                const reverb = new Tone.Reverb({ decay: 4, preDelay: 0.01 }).toDestination();
+
+                const synth = new Tone.PolySynth(Tone.FMSynth, {
+                    harmonicity: 3,
+                    modulationIndex: 10,
+                    envelope: {
+                        attack: 0.01,
+                        decay: 0.4,
+                        sustain: 0.1,
+                        release: 1.4
+                    },
+                    modulationEnvelope: {
+                        attack: 0.01,
+                        decay: 0.4,
+                        sustain: 0.1,
+                        release: 1.4
+                    }
+                }).connect(reverb);
+                synth.volume.value = -6; // Increased volume
+
+                const chords = [
+                    { time: "0:0", chord: ["C4", "E4", "G4"] },
+                    { time: "0:2", chord: ["G3", "B3", "D4"] },
+                    { time: "1:0", chord: ["A3", "C4", "E4"] },
+                    { time: "1:2", chord: ["F3", "A3", "C4"] }
+                ];
+
+                const part = new Tone.Part((time, value) => {
+                    synth.triggerAttackRelease(value.chord, "2n", time);
+                }, chords);
+
+                part.loop = true;
+                part.loopEnd = "2m"; // Loop every 2 measures
+
+                Tone.Transport.bpm.value = 70; // Slower tempo
+                part.start(0);
+                Tone.Transport.start();
+                audioReady = true;
+            }
+            
+            Tone.Destination.mute = !Tone.Destination.mute;
+            soundToggle.innerHTML = Tone.Destination.mute ? soundOffIcon : soundOnIcon;
+        });
+
+        // Canvas Animation
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = canvas.height + Math.random() * 100;
+                this.size = Math.random() * 2 + 0.5; // Slightly larger
+                this.speed = Math.random() * 0.6 + 0.2; // Slightly faster
+                this.color = ['#A1887F', '#EFEBE9', '#FFFFFF'][Math.floor(Math.random() * 3)]; // More contrast
+            }
+            update() {
+                this.y -= this.speed;
+                if (this.y < -10) {
+                    this.y = canvas.height + 10;
+                    this.x = Math.random() * canvas.width;
+                }
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            let numberOfParticles = (canvas.width * canvas.height) / 8000;
+            for (let i = 0; i < numberOfParticles; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+            }
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            initParticles();
+        });
+
+        resizeCanvas();
+        initParticles();
+        animate();
+
+    </script>
+</body>
+</html>
+
